@@ -21,9 +21,13 @@ impl CPU {
         }
     }
 
-    pub fn fetch_opcode(&self, memory: &[u8]) -> u16 {
-        let high_byte = memory[self.pc as usize] as u16;         // Byte mais significativo
-        let low_byte = memory[(self.pc + 1) as usize] as u16;    // Byte menos significativo
-        (high_byte << 8) | low_byte                              // Junta os dois bytes em uma instrução de 16 bits
+    pub fn fetch_opcode(&mut self, memory: &[u8]) -> u16 {
+        let high_byte: u16 = memory[self.pc as usize] as u16;
+        let low_byte: u16 = memory[(self.pc + 1) as usize] as u16;
+        let opcode: u16 = (high_byte << 8) | low_byte;
+        
+        self.pc += 2;
+
+        opcode
     }
 }

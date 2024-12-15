@@ -1,9 +1,10 @@
 package emulator
 
-func RunEmulator() {
+func RunEmulator(romTest string) {
 	cpu := newCPU()
 	memory := newMemory()
 	opcode := cpu.fetchOpcode(memory.ram[:])
 
-	println("Opcode:", opcode)
+	println("opcode:", opcode)
+	println("romTest:", romTest)
 }

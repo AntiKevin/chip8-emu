@@ -7,10 +7,17 @@ import (
 )
 
 var runCmd = &cobra.Command{
-	Use:   "run",
-	Short: "Roda o emulador",
+	Use:       "run",
+	Short:     "Roda o emulador",
+	Args:      cobra.MatchAll(cobra.MinimumNArgs(1)),
+	ValidArgs: []string{"rom"},
 	Run: func(cmd *cobra.Command, args []string) {
-		emulator.RunEmulator()
+
+		if len(args) == 0 {
+			println("Por favor, informe o caminho do arquivo ROM")
+			return
+		}
+		emulator.RunEmulator(args[0])
 	},
 }
 

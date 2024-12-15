@@ -8,7 +8,7 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "chip8-emu",
-	Short: "Um emulador simples feito em Go",
+	Short: "Uma CLI de emulador de CHIP-8 feito em Go!",
 }
 
 func Execute() {

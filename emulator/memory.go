@@ -45,11 +45,3 @@ func (m *memory) LoadROM(cpu *cpu, romPath string, memory []uint8) error {
 func (m *memory) loadFontSet() {
 	copy(m.ram[:], fontSet[:])
 }
-
-func (m *memory) readByte(address uint16) uint8 {
-	return m.ram[address]
-}
-
-func (m *memory) writeByte(address uint16, value uint8) {
-	m.ram[address] = value
-}

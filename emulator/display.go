@@ -1,27 +1,31 @@
 package emulator
 
+import "fmt"
+
 type display struct {
 	screen [64][32]byte // Tela de 64x32 pixels
+}
+
+func newDisplay() *display {
+	return &display{
+		screen: [64][32]byte{},
+	}
 }
 
 // drawSprite desenha um sprite na tela e retorna true se houve colisão
 func (d *display) drawSprite(x, y, height uint16, I uint16, memory []uint8) bool {
 	collision := false
 
-	for row := uint16(0); row < height; row++ {
-		spriteRow := memory[I+row] // Acessando diretamente a memória via o índice I
-		for col := uint16(0); col < 8; col++ {
-			if spriteRow&(0x80>>col) != 0 {
-				px := (x + col) % 64
-				py := (y + row) % 32
+	fmt.Printf("Desenhando sprite em x: %d, y: %d, height: %d, I: %d\n", x, y, height, I)
 
-				// Se o pixel já estiver aceso, houve uma colisão
-				if d.screen[px][py] == 1 {
+	for yline := uint16(0); yline < height; yline++ {
+		pixel := memory[I+yline]
+		for xline := uint16(0); xline < 8; xline++ {
+			if (pixel & (0x80 >> xline)) != 0 {
+				if d.screen[(x+uint16(xline))%64][(y+yline)%32] == 1 {
 					collision = true
 				}
-
-				// Inverte o pixel
-				d.screen[px][py] ^= 1
+				d.screen[(x+uint16(xline))%64][(y+yline)%32] ^= 1
 			}
 		}
 	}
